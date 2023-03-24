@@ -19,7 +19,9 @@
         var downloadLink=document.querySelector("#download-link");
         downloadLink.href=w.url[0].url
         downloadLink.hidden=false;
-        document.querySelector("#thumb")
+        var thumb = document.querySelector("#thumb")
+        thumb.hidden=false;
+        thumb.src=thumb;
       })
       .catch(e=>{
         document.querySelector("#alarm").innerText=e.message;
