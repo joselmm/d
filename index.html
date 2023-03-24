@@ -21,6 +21,9 @@
       .catch(e=>{
         document.querySelector("#download-link").innerText=e.message;
       })
+      window.onpopstate = () => {
+ 	      location.reload()
+      }
      </script>
   </body>
 </html>
