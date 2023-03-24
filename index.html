@@ -17,10 +17,11 @@
       fetch("https://script.google.com/macros/s/AKfycbyn-92JTOxCjFR-U3zFUB4GOhoUp06zomignavKvCx_oP2T_I2sii-7kf57X6xs9krO/exec?videoId="+location.hash.substring("1"))
       .then(res=>res.json())
       .then(w=>{
+        document.querySelector("div h1").hidden=true;
         var downloadLink=document.querySelector("#download-link");
         downloadLink.href=w.url[0].url
         downloadLink.hidden=false;
-        var thumb = document.querySelector("#thumb")
+        var thumb = document.querySelector("#thumb");
         thumb.hidden=false;
         thumb.src=w.thumb;
       })
