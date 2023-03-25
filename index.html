@@ -11,7 +11,7 @@
       <br>
       <a download hidden id="download-link">Decargar AQUI</a>
       <h3 id="alarm"></h3>
-      <div id="relacionados">
+      <div id="related-videos">
         
       
       
@@ -35,6 +35,30 @@
       window.onpopstate = () => {
  	      location.reload()
       }
+      fetch(
+  'https://yt-info-1y11.onrender.com/getInfoFromVideo?videoId=' +
+    location.hash.substring('1')
+)
+  .then((res) => res.json())
+  .then((w) => {
+    console.log(w.related_videos);
+    //.title .thumbnails[0].url .id .published
+    var relatedVideosHTML = '';
+    for (video of w.related_videos) {
+      relatedVideosHTML += `
+      <div class="related-videos col-md-3 col-lg-3 col-sm-3">
+      <a href="${location.href.replace(/#.+/, '#')}${video.id}"><br><img src="${
+        video.thumbnails[0].url
+      }">
+      <span>${video.title}</span>
+      </a>
+      </div>
+
+      `;
+    }
+    //console.log(relatedVideosHTML);
+    document.querySelector('#related-videos').innerHTML = relatedVideosHTML;
+  });
      </script>
   </body>
 </html>
