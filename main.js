@@ -144,7 +144,7 @@ document.querySelector('#search-form').onsubmit = (e) => {
     searchInput.focus();
     setTimeout(() => {
       if (!noValue.hidden) noValue.hidden = true;
-    }, 1000);
+    }, 1000); 
     return;
   }
   if (!videoDetails.hidden) videoDetails.hidden = true;
