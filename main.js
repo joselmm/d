@@ -136,7 +136,7 @@ fetch(
     console.log(w.related_videos);
     for (video of w.related_videos) {
       relatedVideosHTML += `
-      <div class="related-videos col-lg-3 col-md-4 col-sm-6 col-xm-12">
+      <div class="related-videos col-lg-3 col-md-6 col-sm-6 col-xm-12">
       <a href="${location.href.replace(/#.+/, '#')}${video.id}">
       <div>
       
