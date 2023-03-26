@@ -1,19 +1,35 @@
+var buscar = false;
+window.onpopstate = () => {
+  location.reload();
+};
+if (location.hash.includes('##')) {
+  console.log(location.hash);
+  buscar = true;
+  if (location.hash.replace('##', '')) {
+    document.querySelector('#search-input').value = decodeURIComponent(
+      location.hash.replace('##', '')
+    );
+  }
+}
 (() => {
-  function extraerIdDeVideo(url) {
-    const expresion =
-      /^(?:https?:\/\/)?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=))([\w-]{11})(?:\S+)?$/;
-    const match = url.match(expresion);
-    return match ? match[1] : null;
+  if (buscar) {
+    return;
   }
   var videoId = '';
-  if (!location.hash) {
-    var url = prompt('Ingresa Url de tu video');
-    if (url) {
-      location.href = location.href.replace('#', '') + '#' + url;
+  if (!location.hash && !location.hash.includes('##')) {
+    var input = prompt('Ingresa Url de tu video');
+    if (input) {
+      if (input.includes(' ')) {
+        location.href = location.href.replace('#', '') + '##' + input;
+        return;
+      } else {
+        location.href = location.href.replace('#', '') + '#' + input;
+      }
     } else {
       return;
     }
   }
+
   if (location.hash.includes('youtube.com/watch')) {
     videoId = extraerIdDeVideo(location.hash.substring(1));
   } else {
@@ -135,9 +151,6 @@ function getRelatedVideos() {
     });
 }
 
-window.onpopstate = () => {
-  location.reload();
-};
 var buscando = false;
 document.querySelector('#search-form').onsubmit = (e) => {
   e.preventDefault();
@@ -159,7 +172,7 @@ document.querySelector('#search-form').onsubmit = (e) => {
   }
   if (!videoDetails.hidden) videoDetails.hidden = true;
   searchButton.disabled = true;
-
+  location.hash = '##' + searchInput.value;
   fetch(
     'https://yt-info-1y11.onrender.com/buscarVideo/' +
       encodeURIComponent(searchInput.value)
@@ -216,4 +229,15 @@ function etiquetarNumero(num) {
     // Si el número es menor que mil
     return num.toString();
   }
+}
+
+function extraerIdDeVideo(url) {
+  const expresion =
+    /^(?:https?:\/\/)?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=))([\w-]{11})(?:\S+)?$/;
+  const match = url.match(expresion);
+  return match ? match[1] : null;
+}
+
+if (buscar) {
+  document.querySelector('#search-button').click();
 }
