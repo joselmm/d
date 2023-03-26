@@ -70,8 +70,8 @@
 
             var videoQualityHTML = '';
             for (video of e.mp4) {
-              videoQualityHTML += `<a class="btn btn-danger" href="${
-                'http://dl103.apiyoutube.cc/' +
+              videoQualityHTML += `<a target="_blank" class="btn btn-danger" href="${
+                'http://apiyoutube.cc/' +
                 video.vq +
                 '/' +
                 object.hash +
@@ -83,8 +83,8 @@
 
             var audioQualityHTML = '';
             for (audio of e.mp3) {
-              audioQualityHTML += `<a class="btn btn-success" href="${
-                'http://dl103.apiyoutube.cc/' +
+              audioQualityHTML += `<a target="_blank" class="btn btn-success" href="${
+                'http://apiyoutube.cc/' +
                 audio.aq +
                 '/' +
                 object.hash +
