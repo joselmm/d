@@ -86,7 +86,7 @@
             }
             ///  console.log(otherQualityHTML);
 
-            document.querySelector('#quality #v-quality').innerHTML = audioQualityHTML;
+            document.querySelector('#quality #a-quality').innerHTML = audioQualityHTML;
           })
           .catch((e) => e);
       }
