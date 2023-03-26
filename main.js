@@ -59,10 +59,12 @@
             thumb.hidden = false;
             document.querySelector('div h1').innerText = e.title;
             thumb.src = 'https://i.ytimg.com/vi/' + videoId + '/hqdefault.jpg';
-            console.log(e.mp3);
-            var otherQualityHTML = '';
+           // console.log(e.mp3);
+          
+          
+            var videoQualityHTML = '';
             for (video of e.mp4) {
-              otherQualityHTML += `<a class="btn btn-danger" href="${
+              videoQualityHTML += `<a class="btn btn-danger" href="${
                 'http://dl103.apiyoutube.cc/' +
                 video.vq +
                 '/' +
@@ -70,8 +72,11 @@
                 '::no::oc'
               }">MP4 ${video.vq} ${video.vs}</a><br><br>`;
             }
+          document.querySelector('#quality #v-quality').innerHTML = videoQualityHTML;
+          
+          var audioQualityHTML="";
             for (audio of e.mp3) {
-              otherQualityHTML += `<a class="btn btn-success" href="${
+              audioQualityHTML += `<a class="btn btn-success" href="${
                 'http://dl103.apiyoutube.cc/' +
                 audio.aq +
                 '/' +
@@ -81,7 +86,7 @@
             }
             ///  console.log(otherQualityHTML);
 
-            document.querySelector('#quality').innerHTML = otherQualityHTML;
+            document.querySelector('#quality #v-quality').innerHTML = audioQualityHTML;
           })
           .catch((e) => e);
       }
