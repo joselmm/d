@@ -121,9 +121,7 @@ function getRelatedVideos() {
       <span>${video.title}</span>
       </div>
       </a>
-      </div>
-
-      `;
+      </div>`;
       }
       //console.log(relatedVideosHTML);
       document.querySelector('#related-videos').innerHTML = relatedVideosHTML;
