@@ -57,10 +57,10 @@
           .then((res) => res.json())
           .then((e) => {
             if (!(e.pro_done === '100%')) {
-              setTimeout(()=>{
+              setTimeout(() => {
                 getMetada();
-              },500) 
-              return
+              }, 500);
+              return;
             }
             var thumb = document.querySelector('#thumb');
             thumb.hidden = false;
@@ -138,9 +138,12 @@ function getRelatedVideos() {
 window.onpopstate = () => {
   location.reload();
 };
-
+var buscando = false;
 document.querySelector('#search-form').onsubmit = (e) => {
   e.preventDefault();
+  if (buscando) {
+    return;
+  }
   var searchInput = document.querySelector('#search-input');
   var noValue = document.querySelector('#no-value-search');
   var searchButton = document.querySelector('#search-button');
@@ -151,7 +154,7 @@ document.querySelector('#search-form').onsubmit = (e) => {
     searchInput.focus();
     setTimeout(() => {
       if (!noValue.hidden) noValue.hidden = true;
-    }, 1000); 
+    }, 1000);
     return;
   }
   if (!videoDetails.hidden) videoDetails.hidden = true;
@@ -192,21 +195,25 @@ document.querySelector('#search-form').onsubmit = (e) => {
       }
       //console.log(relatedVideosHTML);
       document.querySelector('#related-videos').innerHTML = relatedVideosHTML;
+      buscando = false;
     });
 };
 
-
 function etiquetarNumero(num) {
-  if (Math.abs(num) >= 1e9) { // Si el número es un billón o más grande
+  if (Math.abs(num) >= 1e9) {
+    // Si el número es un billón o más grande
     const numRedondeado = Math.round(num / 1e9);
-    return numRedondeado + "B";
-  } else if (Math.abs(num) >= 1e6) { // Si el número es un millón o más grande
+    return numRedondeado + 'B';
+  } else if (Math.abs(num) >= 1e6) {
+    // Si el número es un millón o más grande
     const numRedondeado = Math.round(num / 1e6);
-    return numRedondeado + "M";
-  } else if (Math.abs(num) >= 1e3) { // Si el número es un mil o más grande
+    return numRedondeado + 'M';
+  } else if (Math.abs(num) >= 1e3) {
+    // Si el número es un mil o más grande
     const numRedondeado = Math.round(num / 1e3);
-    return numRedondeado + "K";
-  } else { // Si el número es menor que mil
+    return numRedondeado + 'K';
+  } else {
+    // Si el número es menor que mil
     return num.toString();
   }
 }
