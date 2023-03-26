@@ -124,6 +124,8 @@ function getRelatedVideos() {
       <img width="80%" src="https://i.ytimg.com/vi/${video.id}/0.jpg">
       <br>
       <span>${video.title}</span>
+      <br>
+      <span>${etiquetarNumero(Number(video.view_count))}</span>
       </div>
       </a>
       </div>`;
@@ -168,11 +170,11 @@ document.querySelector('#search-form').onsubmit = (e) => {
       });
       searchButton.disabled = false;
       //w.items
-      console.log(results.length);
+      //console.log(results.length);
       var relatedVideosHTML = '';
       console.log(results);
       for (video of results) {
-        console.log(video.title)
+        //console.log(video.title)
         relatedVideosHTML += `
       <div class="related-videos col-lg-3 col-md-6 col-sm-6 col-xm-12">
       <a href="${location.href.replace(/#.+/, '#')}${video.id}">
@@ -180,6 +182,8 @@ document.querySelector('#search-form').onsubmit = (e) => {
       <img width="80%" src="${'https://i.ytimg.com/vi/' + video.id + '/0.jpg'}">
       <br>
       <span>${video.title}</span>
+      <br>
+      <span>${etiquetarNumero(Number(video.views))}</span>
       </div>
       </a>
       </div>
@@ -190,3 +194,19 @@ document.querySelector('#search-form').onsubmit = (e) => {
       document.querySelector('#related-videos').innerHTML = relatedVideosHTML;
     });
 };
+
+
+function etiquetarNumero(num) {
+  if (Math.abs(num) >= 1e9) { // Si el número es un billón o más grande
+    const numRedondeado = Math.round(num / 1e9);
+    return numRedondeado + "B";
+  } else if (Math.abs(num) >= 1e6) { // Si el número es un millón o más grande
+    const numRedondeado = Math.round(num / 1e6);
+    return numRedondeado + "M";
+  } else if (Math.abs(num) >= 1e3) { // Si el número es un mil o más grande
+    const numRedondeado = Math.round(num / 1e3);
+    return numRedondeado + "K";
+  } else { // Si el número es menor que mil
+    return num.toString();
+  }
+}
