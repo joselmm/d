@@ -99,19 +99,19 @@
     .catch((e) => e);
 })();
 
-function getRelatedVideos(){
-fetch(
-  'https://yt-info-1y11.onrender.com/getInfoFromVideo?videoId=' +
-    location.hash.substring('1')
-)
-  .then((res) => res.json())
-  .then((w) => {
-    console.log(w.related_videos);
-    //.title .thumbnails[0].url .id .published
-    var relatedVideosHTML = '';
-    console.log(w.related_videos);
-    for (video of w.related_videos) {
-      relatedVideosHTML += `
+function getRelatedVideos() {
+  fetch(
+    'https://yt-info-1y11.onrender.com/getInfoFromVideo?videoId=' +
+      location.hash.substring('1')
+  )
+    .then((res) => res.json())
+    .then((w) => {
+      console.log(w.related_videos);
+      //.title .thumbnails[0].url .id .published
+      var relatedVideosHTML = '';
+      console.log(w.related_videos);
+      for (video of w.related_videos) {
+        relatedVideosHTML += `
       <div class="related-videos col-lg-3 col-md-6 col-sm-6 col-xm-12">
       <a href="${location.href.replace(/#.+/, '#')}${video.id}">
       <div>
@@ -124,18 +124,36 @@ fetch(
       </div>
 
       `;
-    }
-    //console.log(relatedVideosHTML);
-    document.querySelector('#related-videos').innerHTML = relatedVideosHTML;
-  });
-
+      }
+      //console.log(relatedVideosHTML);
+      document.querySelector('#related-videos').innerHTML = relatedVideosHTML;
+    });
 }
 
 window.onpopstate = () => {
   location.reload();
 };
 
-
-document.querySelector("#search-form").onsubmit=(e)=>{
-  dovcument
-}
+document.querySelector('#search-form').onsubmit = (e) => {
+  e.preventDefault();
+  var searchInput = document.querySelector('#search-input');
+  var noValue=document.querySelector('#no-value-search')
+  var searchButton = document.querySelector('#search-button');
+  if (!searchInput.value) {
+    noValue.hidden = false;
+    setTimeout(()=>{
+      if( !noValue.hidden) noValue.hidden=true;
+    },1000)
+    return;
+  }
+  searchButton.disabled=true;
+  fetch(
+    'https://yt-info-1y11.onrender.com/buscarVideo/' +
+      encodeURIComponent(searchInput.value)
+  )
+    .then((res) => res.json())
+    .then((w) => {
+      searchButton.disabled=false;
+      console.log(w.items)
+    });
+};
