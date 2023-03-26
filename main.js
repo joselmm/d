@@ -172,7 +172,7 @@ document.querySelector('#search-form').onsubmit = (e) => {
       <div class="related-videos col-lg-3 col-md-6 col-sm-6 col-xm-12">
       <a href="${location.href.replace(/#.+/, '#')}${video.id}">
       <div>
-      <img src="${'https://i.ytimg.com/vi/' + video.id + '/hqdefault.jpg'}">
+      <img width="80%" src="${'https://i.ytimg.com/vi/' + video.id + '/hqdefault.jpg'}">
       <br>
       <span>${video.title}</span>
       </div>
