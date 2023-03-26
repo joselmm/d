@@ -3,62 +3,33 @@
   <head>
     <title>Descargar Video De Youtube</title>
     <meta charset="UTF-8" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   </head>
   <body>
     <div align="center"><h1>ESPERA UN MOMENTO</h1></div>
-    <div  align="center">
-      <img hidden id="thumb">
-      <br>
-      <a download hidden id="download-link">Decargar AQUI</a>
+    <div align="center">
+      <img hidden id="thumb" />
+      <br />
+      <a class="btn btn-info" download hidden id="download-link"
+        >diffConverter</a
+      >
+      <div id="adicionales"></div>
       <h3 id="alarm"></h3>
-      <div id="related-videos">
-        
-      
-      
-      </div>
+      <div id="quality"></div>
+      <div class="row" id="related-videos"></div>
     </div>
-    <script>
-      fetch("https://script.google.com/macros/s/AKfycbyn-92JTOxCjFR-U3zFUB4GOhoUp06zomignavKvCx_oP2T_I2sii-7kf57X6xs9krO/exec?videoId="+location.hash.substring("1"))
-      .then(res=>res.json())
-      .then(w=>{
-        document.querySelector("div h1").innerText=w.meta.title;
-        var downloadLink=document.querySelector("#download-link");
-        downloadLink.href=w.url[0].url
-        downloadLink.hidden=false;
-        var thumb = document.querySelector("#thumb");
-        thumb.hidden=false;
-        thumb.src=w.thumb;
-      })
-      .catch(e=>{
-        document.querySelector("#alarm").innerText=e.message;
-      })
-      window.onpopstate = () => {
- 	      location.reload()
-      }
-      fetch(
-  'https://yt-info-1y11.onrender.com/getInfoFromVideo?videoId=' +
-    location.hash.substring('1')
-)
-  .then((res) => res.json())
-  .then((w) => {
-    console.log(w.related_videos);
-    //.title .thumbnails[0].url .id .published
-    var relatedVideosHTML = '';
-    for (video of w.related_videos) {
-      relatedVideosHTML += `
-      <div class="related-videos col-md-3 col-lg-3 col-sm-3">
-      <a href="${location.href.replace(/#.+/, '#')}${video.id}"><br><img src="${
-        video.thumbnails[0].url
-      }">
-      <span>${video.title}</span>
-      </a>
-      </div>
-
-      `;
-    }
-    //console.log(relatedVideosHTML);
-    document.querySelector('#related-videos').innerHTML = relatedVideosHTML;
-  });
-     </script>
+    <script id="main" src="main.js"></script>
+    <!-- DEPENDENCIAS BOOSTRAP -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>
