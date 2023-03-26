@@ -56,7 +56,12 @@
         )
           .then((res) => res.json())
           .then((e) => {
-            if (!(e.pro_done === '100%')) getMetada();
+            if (!(e.pro_done === '100%')) {
+              setTimeout(()=>{
+                getMetada();
+              },500) 
+              return
+            }
             var thumb = document.querySelector('#thumb');
             thumb.hidden = false;
             document.querySelector('div h1').innerText = e.title;
