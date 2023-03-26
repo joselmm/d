@@ -137,23 +137,53 @@ window.onpopstate = () => {
 document.querySelector('#search-form').onsubmit = (e) => {
   e.preventDefault();
   var searchInput = document.querySelector('#search-input');
-  var noValue=document.querySelector('#no-value-search')
+  var noValue = document.querySelector('#no-value-search');
   var searchButton = document.querySelector('#search-button');
+  var videoDetails = document.querySelector('#video-details');
+
   if (!searchInput.value) {
     noValue.hidden = false;
-    setTimeout(()=>{
-      if( !noValue.hidden) noValue.hidden=true;
-    },1000)
+    searchInput.focus();
+    setTimeout(() => {
+      if (!noValue.hidden) noValue.hidden = true;
+    }, 1000);
     return;
   }
-  searchButton.disabled=true;
+  if (!videoDetails.hidden) videoDetails.hidden = true;
+  searchButton.disabled = true;
+
   fetch(
     'https://yt-info-1y11.onrender.com/buscarVideo/' +
       encodeURIComponent(searchInput.value)
   )
     .then((res) => res.json())
     .then((w) => {
-      searchButton.disabled=false;
-      console.log(w.items)
+      var results = w.items.filter((e) => {
+        if (e.type === 'video') {
+          return e;
+        }
+      });
+      searchButton.disabled = false;
+      //w.items
+      console.log(results.length);
+      var relatedVideosHTML = '';
+      console.log(results);
+      for (video of results) {
+        console.log(video.title)
+        relatedVideosHTML += `
+      <div class="related-videos col-lg-3 col-md-6 col-sm-6 col-xm-12">
+      <a href="${location.href.replace(/#.+/, '#')}${video.id}">
+      <div>
+      <img src="${'https://i.ytimg.com/vi/' + video.id + '/hqdefault.jpg'}">
+      <br>
+      <span>${video.title}</span>
+      </div>
+      </a>
+      </div>
+
+      `;
+      }
+      //console.log(relatedVideosHTML);
+      document.querySelector('#related-videos').innerHTML = relatedVideosHTML;
     });
 };
