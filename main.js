@@ -116,7 +116,7 @@ function getRelatedVideos() {
       <a href="${location.href.replace(/#.+/, '#')}${video.id}">
       <div>
       
-      <img src="${video.thumbnails[0].url}">
+      <img width="80%" src="${video.thumbnails[0].url}">
       <br>
       <span>${video.title}</span>
       </div>
