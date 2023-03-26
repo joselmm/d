@@ -19,7 +19,8 @@
   } else {
     videoId = location.hash.substring(1);
   }
-
+  document.querySelector('#video-details').hidden = false;
+  getRelatedVideos();
   var dateSend = Date.now();
   console.log(dateSend);
   var callBack =
@@ -32,6 +33,7 @@
     videoId +
     '&_=' +
     dateSend;
+
   fetch(urlAPI)
     .then((res) => res.text())
     .then(async (data) => {
@@ -59,9 +61,8 @@
             thumb.hidden = false;
             document.querySelector('div h1').innerText = e.title;
             thumb.src = 'https://i.ytimg.com/vi/' + videoId + '/hqdefault.jpg';
-           // console.log(e.mp3);
-          
-          
+            // console.log(e.mp3);
+
             var videoQualityHTML = '';
             for (video of e.mp4) {
               videoQualityHTML += `<a class="btn btn-danger" href="${
@@ -72,9 +73,10 @@
                 '::no::oc'
               }">MP4 ${video.vq} ${video.vs}</a><br><br>`;
             }
-          document.querySelector('#quality #v-quality').innerHTML = videoQualityHTML;
-          
-          var audioQualityHTML="";
+            document.querySelector('#quality #v-quality').innerHTML =
+              videoQualityHTML;
+
+            var audioQualityHTML = '';
             for (audio of e.mp3) {
               audioQualityHTML += `<a class="btn btn-success" href="${
                 'http://dl103.apiyoutube.cc/' +
@@ -86,7 +88,8 @@
             }
             ///  console.log(otherQualityHTML);
 
-            document.querySelector('#quality #a-quality').innerHTML = audioQualityHTML;
+            document.querySelector('#quality #a-quality').innerHTML =
+              audioQualityHTML;
           })
           .catch((e) => e);
       }
@@ -96,34 +99,7 @@
     .catch((e) => e);
 })();
 
-/* fetch(
-  'https://script.google.com/macros/s/AKfycbyn-92JTOxCjFR-U3zFUB4GOhoUp06zomignavKvCx_oP2T_I2sii-7kf57X6xs9krO/exec?videoId=' +
-    location.hash.substring('1')
-)
-  .then((res) => res.json())
-  .then((w) => {
-    console.log(w.converter.mp4['720p'].stream[0].url);
-    var otherQuality = w.url.filter((url) => !url.audio && !url.no_audio);
-    var jjs = w.url.filter((url) => url.audio && !url.no_audio);
-    console.log(jjs);
-    var otherQualityHTML = '';
-    for (video of otherQuality) {
-      otherQualityHTML += `<a class="btn btn-danger" href="${video.url}">calidad ${video.subname}</a><br><br>`;
-    }
-    document.querySelector('#quality').innerHTML = otherQualityHTML;
-    document.querySelector('div h1').innerText = w.meta.title;
-    var downloadLink = document.querySelector('#download-link');
-    downloadLink.href = w.diffConverter;
-    //console.log()
-    downloadLink.hidden = false;
-    // console.log(w);
-    var thumb = document.querySelector('#thumb');
-    thumb.hidden = false;
-    thumb.src = w.thumb;
-  })
-  .catch((e) => {
-    document.querySelector('#alarm').innerText = e.message;
-  }); */
+function getRelatedVideos(){
 fetch(
   'https://yt-info-1y11.onrender.com/getInfoFromVideo?videoId=' +
     location.hash.substring('1')
@@ -140,9 +116,7 @@ fetch(
       <a href="${location.href.replace(/#.+/, '#')}${video.id}">
       <div>
       
-      <img src="${
-        video.thumbnails[0].url
-      }">
+      <img src="${video.thumbnails[0].url}">
       <br>
       <span>${video.title}</span>
       </div>
@@ -154,6 +128,14 @@ fetch(
     //console.log(relatedVideosHTML);
     document.querySelector('#related-videos').innerHTML = relatedVideosHTML;
   });
+
+}
+
 window.onpopstate = () => {
   location.reload();
 };
+
+
+document.querySelector("#search-form").onsubmit=(e)=>{
+  dovcument
+}

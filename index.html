@@ -13,37 +13,44 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   </head>
   <body>
-    <div align="center">
-      <div class="input-group">
+    <div align="center" style="max-width: 558px">
+      <div
+        style="display: flex; margin: 5dvh auto; items-align: center"
+        class="input-group"
+      >
+      <form style="width:100%"id="search-form">
         <input
           id="search-input"
           type="search"
           id="form1"
           class="form-control"
-          placeholder="busca o pega"
+          placeholder="busca"
         />
 
-        <button id="search-button" type="button" class="btn btn-primary">
+        <button id="search-button" type="submit" class="btn btn-primary">
           buscar
         </button>
+      </form>
       </div>
-      <div align="center"><h1>ESPERA UN MOMENTO</h1></div>
-      <img
-        hidden
-        id="thumb"
-        width="100%"
-        style="margin: 0 5dvw; max-width: 558px"
-      />
+      <div id="video-details" hidden>
+        <div align="center"><h1>ESPERA UN MOMENTO</h1></div>
+        <img
+          hidden
+          id="thumb"
+          width="100%"
+          style="margin: 0 5dvw; max-width: 558px"
+        />
 
-      <br />
-      <a class="btn btn-info" download hidden id="download-link"
-        >diffConverter</a
-      >
-      <div id="adicionales"></div>
-      <h3 id="alarm"></h3>
-      <div id="quality" class="row">
-        <div id="a-quality" class="col-6"></div>
-        <div id="v-quality" class="col-6"></div>
+        <br />
+        <a class="btn btn-info" download hidden id="download-link"
+          >diffConverter</a
+        >
+
+        <h3 id="alarm"></h3>
+        <div id="quality" class="row">
+          <div id="a-quality" class="col-6"></div>
+          <div id="v-quality" class="col-6"></div>
+        </div>
       </div>
       <div class="row" id="related-videos"></div>
     </div>
