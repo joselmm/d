@@ -312,5 +312,6 @@ document.onkeydown = (e) => {
       url: document.querySelector('[data-aq="128"]').href,
       cover: document.querySelector('#thumb').src,
     });
+    document.querySelector('#aplayer').scrollIntoView();
   }
 };
