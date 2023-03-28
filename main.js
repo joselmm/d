@@ -152,11 +152,11 @@ function analizar() {
       var thumb = document.querySelector('#thumb');
       thumb.hidden = false;
       function getMetada() {
-        fetch(
-          `https://script.google.com/macros/s/AKfycbweFjW5hRq2TT5bLj0V9cNxNW_A1jwYXBqS6bFARLZ2g7xCUGKYaqOSqoZqmfEaFkqg/exec?callback=${callBack}&id=${encodeURIComponent(
-            object.hash
-          )}&datesend=${dateSend}`
-        )
+        var myAPi = `https://script.google.com/macros/s/AKfycbweFjW5hRq2TT5bLj0V9cNxNW_A1jwYXBqS6bFARLZ2g7xCUGKYaqOSqoZqmfEaFkqg/exec?callback=${callBack}&id=${encodeURIComponent(
+          object.hash
+        )}&datesend=${dateSend}`;
+        /* console.log(myAPi) */
+        fetch(myAPi)
           .then((res) => res.json())
           .then((e) => {
             console.log(e);
@@ -185,7 +185,9 @@ function analizar() {
 
             var videoQualityHTML = '';
             for (video of e.mp4) {
-              videoQualityHTML += `<a data-aq="${audio.vq}" target="_blank" class="btn btn-danger" href="${
+              videoQualityHTML += `<a data-aq="${
+                video.vq
+              }" target="_blank" class="btn btn-danger" href="${
                 'http://apiyoutube.cc/' +
                 video.vq +
                 '/' +
@@ -198,7 +200,9 @@ function analizar() {
 
             var audioQualityHTML = '';
             for (audio of e.mp3) {
-              audioQualityHTML += `<a data-aq="${audio.aq}" target="_blank" class="btn btn-success" href="${
+              audioQualityHTML += `<a data-aq="${
+                audio.aq
+              }" target="_blank" class="btn btn-success" href="${
                 'http://apiyoutube.cc/' +
                 audio.aq +
                 '/' +
@@ -283,6 +287,3 @@ if (buscar) {
 }
 
 analizar();
-
-
-
