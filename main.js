@@ -185,7 +185,7 @@ function analizar() {
 
             var videoQualityHTML = '';
             for (video of e.mp4) {
-              videoQualityHTML += `<a target="_blank" class="btn btn-danger" href="${
+              videoQualityHTML += `<a data-aq="${audio.vq}" target="_blank" class="btn btn-danger" href="${
                 'http://apiyoutube.cc/' +
                 video.vq +
                 '/' +
@@ -198,7 +198,7 @@ function analizar() {
 
             var audioQualityHTML = '';
             for (audio of e.mp3) {
-              audioQualityHTML += `<a target="_blank" class="btn btn-success" href="${
+              audioQualityHTML += `<a data-aq="${audio.aq}" target="_blank" class="btn btn-success" href="${
                 'http://apiyoutube.cc/' +
                 audio.aq +
                 '/' +
