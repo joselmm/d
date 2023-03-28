@@ -64,6 +64,9 @@ function buscarFuncion() {
 var buscar = false;
 window.onpopstate = () => {
   if (location.hash.match(/##.+/)?.length) {
+    var value = location.hash.match(/##.+/)[0].substring(2);
+    document.querySelector('#search-input').value = decodeURIComponent(value);
+
     buscarFuncion();
   } else if (location.hash.match(/#.+/)?.length) {
     //location.hash.match(/#.+/)[0]
