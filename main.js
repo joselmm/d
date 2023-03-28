@@ -298,11 +298,12 @@ analizar();
 // APLAYER
 
 document.onkeydown = (e) => {
-  const keyPressed = e.key.toLowerCase();
+  const keyPressed = e.key?.toLowerCase();
   if (keyPressed === 'p' && e.ctrlKey) {
     e.preventDefault();
     document.querySelector('#aplayer').hidden =
       !document.querySelector('#aplayer').hidden;
+    document.querySelector('#aplayer').scrollIntoView();
   }
   if (keyPressed === 'a' && e.ctrlKey) {
     e.preventDefault();
