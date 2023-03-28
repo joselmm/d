@@ -296,7 +296,7 @@ if (buscar) {
 analizar();
 
 // APLAYER
-
+/* 
 document.onkeydown = (e) => {
   const keyPressed = e.key?.toLowerCase();
   if (keyPressed === 'p' && e.ctrlKey) {
@@ -316,3 +316,4 @@ document.onkeydown = (e) => {
     document.querySelector('#aplayer').scrollIntoView();
   }
 };
+ */
