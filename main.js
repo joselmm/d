@@ -317,3 +317,20 @@ document.onkeydown = (e) => {
   }
 };
  */
+
+document.onkeydown = (e) => {
+  const keyPressed = e.key?.toLowerCase();
+  
+  if (keyPressed === 'a' && e.ctrlKey) {
+    e.preventDefault();
+    if(!document.querySelector("#video-details").hidden)SCM.queue({title:document.querySelector('#video-title').innerText,url:document.querySelector('[data-aq="128"]').href});
+    else alert("espera a que cargue el video")
+   /*  myPlayer.list.add({
+      name: document.querySelector('#video-title').innerText,
+      videoId: document.querySelector('#video-details').dataset.videoid,
+      url: document.querySelector('[data-aq="128"]').href,
+      cover: document.querySelector('#thumb').src,
+    });
+    document.querySelector('#aplayer').scrollIntoView(); */
+  }
+};
