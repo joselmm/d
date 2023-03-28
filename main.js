@@ -120,6 +120,10 @@ function analizar() {
   document.querySelector('#alarmador').hidden = false;
   document.querySelector('#alarmador').innerText = 'ESPERA UN MOMENTO';
   document.querySelector('#video-details').hidden = true;
+  document
+    .querySelector('#video-details')
+    .setAttribute('data-videoid', videoId);
+
   document.querySelector('#search-form').scrollIntoView();
   sessionStorage.setItem('convirtiendo', videoId);
   getRelatedVideos();
@@ -290,3 +294,23 @@ if (buscar) {
 }
 
 analizar();
+
+// APLAYER
+
+document.onkeydown = (e) => {
+  const keyPressed = e.key.toLowerCase();
+  if (keyPressed === 'p' && e.ctrlKey) {
+    e.preventDefault();
+    document.querySelector('#aplayer').hidden =
+      !document.querySelector('#aplayer').hidden;
+  }
+  if (keyPressed === 'a' && e.ctrlKey) {
+    e.preventDefault();
+    myPlayer.list.add({
+      name: document.querySelector('#video-title').innerText,
+      videoId: document.querySelector('#video-details').dataset.videoid,
+      url: document.querySelector('[data-aq="128"]').href,
+      cover: document.querySelector('#thumb').src,
+    });
+  }
+};
