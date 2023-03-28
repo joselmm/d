@@ -143,11 +143,11 @@ function analizar() {
         .substring(1)
         .substring(0, preObject.substring(1).length - 1);
       var object = JSON.parse(json);
-      /* if (document.querySelector('#prosessing-title').hidden) {
+      if (document.querySelector('#prosessing-title').hidden) {
         document.querySelector('#prosessing-title').hidden = false;
       }
       document.querySelector('#prosessing-title').innerText = object.title;
- */
+
       //document.querySelector("#alarmador").innerText=object
       var thumb = document.querySelector('#thumb');
       thumb.hidden = false;
@@ -283,3 +283,6 @@ if (buscar) {
 }
 
 analizar();
+
+
+
