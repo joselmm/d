@@ -67,6 +67,7 @@ window.onpopstate = () => {
     buscarFuncion();
   } else if (location.hash.match(/#.+/)?.length) {
     //location.hash.match(/#.+/)[0]
+
     analizar();
   }
 };
@@ -113,8 +114,11 @@ function analizar() {
     document.querySelector('#alarmador').innerText = 'ESPERA UN MOMENTO';
   }
 
-  document.querySelector('#video-details').hidden = false;
-
+  document.querySelector('#alarmador').hidden = false;
+  document.querySelector('#alarmador').innerText = 'ESPERA UN MOMENTO';
+  document.querySelector('#video-details').hidden = true;
+  document.querySelector('#search-form').scrollIntoView();
+  sessionStorage.setItem('convirtiendo', videoId);
   getRelatedVideos();
   var dateSend = Date.now();
   console.log(dateSend);
@@ -139,7 +143,11 @@ function analizar() {
         .substring(1)
         .substring(0, preObject.substring(1).length - 1);
       var object = JSON.parse(json);
-
+      /* if (document.querySelector('#prosessing-title').hidden) {
+        document.querySelector('#prosessing-title').hidden = false;
+      }
+      document.querySelector('#prosessing-title').innerText = object.title;
+ */
       //document.querySelector("#alarmador").innerText=object
       var thumb = document.querySelector('#thumb');
       thumb.hidden = false;
@@ -151,16 +159,27 @@ function analizar() {
         )
           .then((res) => res.json())
           .then((e) => {
+            console.log(e);
             document.querySelector('#alarmador').innerText = e.pro_done;
+            if (document.querySelector('#prosessing-title').hidden) {
+              document.querySelector('#prosessing-title').hidden = false;
+            }
+            document.querySelector('#prosessing-title').innerText = e.title;
+
             if (!(e.pro_done === '100%')) {
-              setTimeout(() => {
-                getMetada();
-              }, 500);
+              if (videoId == sessionStorage.getItem('convirtiendo'))
+                setTimeout(() => {
+                  getMetada();
+                }, 500);
               return;
             }
+            document.querySelector('#prosessing-title').hidden = true;
+            document.querySelector('#alarmador').hidden = true;
+            document.querySelector('#video-details').hidden = false;
+
             var thumb = document.querySelector('#thumb');
             thumb.hidden = false;
-            document.querySelector('div h1').innerText = e.title;
+            document.querySelector('div h1#video-title').innerText = e.title;
             thumb.src = 'https://i.ytimg.com/vi/' + videoId + '/hqdefault.jpg';
             // console.log(e.mp3);
 
