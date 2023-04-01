@@ -426,11 +426,18 @@ function renderSuggestions(list) {
   var idx = 0;
   for (arreglo of list) {
     content += `
-    <div data-idx=${idx++} class="suggestion">${arreglo[0]}</div>
+    <div onclick="buscarConSugerencia(this)" data-idx=${idx++} class="suggestion">${
+      arreglo[0]
+    }</div>
     `;
   }
   //content = '<u>' + content + '</u>';
   $suggestions.innerHTML = content;
+}
+
+function buscarConSugerencia(e) {
+  searchInput.value = e.innerText;
+  searchButton.click();
 }
 
 function ubicarSuggestions() {

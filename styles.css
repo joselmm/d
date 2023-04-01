@@ -1,5 +1,5 @@
 #suggestions {
-  position: fixed;
+  position: absolute;
   width: auto;
   z-index: 5;
 }
