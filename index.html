@@ -17,10 +17,10 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css"
     />
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <div hidden id="aplayer"></div>
-   
 
     <!-- <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
     <script>
@@ -42,23 +42,29 @@
         "
         class="input-group"
       >
-        <form style="width: 100%" id="search-form">
+        <form style="width: 80%; display: inline; margin: 0" id="search-form">
           <input
             id="search-input"
             type="search"
-            id="form1"
             class="form-control"
             placeholder="busca"
+            style="width: 75%; display: inline-block"
           />
-
-          <button id="search-button" type="submit" class="btn btn-primary">
-            buscar
+          <button
+            style="width: 20%; display: inline-block"
+            id="search-button"
+            type="submit"
+            class="btn btn-primary"
+          >
+            Buscar
           </button>
+
           <br />
           <span id="no-value-search" hidden style="color: red"
             >Ingresa un valor valido</span
           >
         </form>
+        <div id="suggestions">Hola</div>
       </div>
       <div align="center">
         <h2 hidden id="prosessing-title"></h2>
@@ -86,16 +92,19 @@
       </div>
       <div class="row" id="related-videos"></div>
     </div>
-    <script id="main" src="main.js"></script>
     <!-- DEPENDENCIAS BOOSTRAP -->
     <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-      crossorigin="anonymous"
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"
     ></script>
-     <!-- SCM Music Player https://www.scmplayer.net -->
-<script type="text/javascript" src="https://www.scmplayer.net/script.js" 
-data-config="{'skin':'skins/black/skin.css','volume':50,'autoplay':true,'shuffle':false,'repeat':0,'placement':'top','showplaylist':false,'playlist':[]}" ></script>
-<!-- SCM Music Player script end -->
+    <!-- SCM Music Player https://www.scmplayer.net -->
+    <script
+    type="text/javascript"
+    src="https://www.scmplayer.net/script.js"
+    data-config="{'skin':'skins/black/skin.css','volume':50,'autoplay':true,'shuffle':false,'repeat':0,'placement':'top','showplaylist':false,'playlist':[]}"
+    ></script>
+    <!-- SCM Music Player script end -->
+    <script id="main" src="main.js"></script>
   </body>
 </html>

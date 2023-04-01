@@ -1,15 +1,16 @@
+const $suggestions = document.querySelector('#suggestions');
 document.querySelector('#search-form').onsubmit = (e) => {
   e.preventDefault();
   buscarFuncion();
 };
+var searchInput = document.querySelector('#search-input');
+var noValue = document.querySelector('#no-value-search');
+var searchButton = document.querySelector('#search-button');
+var videoDetails = document.querySelector('#video-details');
 function buscarFuncion() {
   if (buscando) {
     return;
   }
-  var searchInput = document.querySelector('#search-input');
-  var noValue = document.querySelector('#no-value-search');
-  var searchButton = document.querySelector('#search-button');
-  var videoDetails = document.querySelector('#video-details');
 
   if (!searchInput.value) {
     noValue.hidden = false;
@@ -320,12 +321,16 @@ document.onkeydown = (e) => {
 
 document.onkeydown = (e) => {
   const keyPressed = e.key?.toLowerCase();
-  
+
   if (keyPressed === 'a' && e.ctrlKey) {
     e.preventDefault();
-    if(!document.querySelector("#video-details").hidden)SCM.queue({title:document.querySelector('#video-title').innerText,url:document.querySelector('[data-aq="128"]').href});
-    else alert("espera a que cargue el video")
-   /*  myPlayer.list.add({
+    if (!document.querySelector('#video-details').hidden)
+      SCM.queue({
+        title: document.querySelector('#video-title').innerText,
+        url: document.querySelector('[data-aq="128"]').href,
+      });
+    else alert('espera a que cargue el video');
+    /*  myPlayer.list.add({
       name: document.querySelector('#video-title').innerText,
       videoId: document.querySelector('#video-details').dataset.videoid,
       url: document.querySelector('[data-aq="128"]').href,
@@ -334,3 +339,59 @@ document.onkeydown = (e) => {
     document.querySelector('#aplayer').scrollIntoView(); */
   }
 };
+
+var startSearch = 0;
+var lastOneSearchTime = 0;
+
+searchInput.oninput = (e) => {
+  var valor = e.target.value;
+  //console.log(valor);
+  if (!valor) {
+    document.querySelector('#suggestions').innerHTML = '';
+    return;
+  }
+  /* var funcionToken =(""+Math.random()).split(".")[1]
+   */
+  startSearch = Date.now();
+  var query = encodeURIComponent(valor);
+  setTimeout(() => {
+    lastOneSearchTime = Date.now();
+    if (lastOneSearchTime - startSearch >= 500) {
+      fetch(
+        'https://script.google.com/macros/s/AKfycbyn-92JTOxCjFR-U3zFUB4GOhoUp06zomignavKvCx_oP2T_I2sii-7kf57X6xs9krO/exec?query=' +
+          query
+      )
+        .then((res) => res.text())
+        .then((res) => {
+          var object = JSON.parse(res.split(/.+\(/)[1].split(')')[0]);
+          var suggestionsList = object[1];
+          console.log(suggestionsList);
+          if (valor == e.target.value) {
+            renderSuggestions(suggestionsList);
+          }
+        });
+    }
+  }, 500);
+};
+
+function renderSuggestions(list) {
+  //console.log(list);
+  var content = '';
+  for (arreglo of list) {
+    content += `
+    <div class="suggestion">${arreglo[0]}</div>
+    `;
+  }
+  //content = '<u>' + content + '</u>';
+  $suggestions.innerHTML = content;
+}
+
+function ubicarSuggestions() {
+  var params = searchInput.getBoundingClientRect();
+  console.log(params);
+  $suggestions.style.left = params.left + 'px';
+  $suggestions.style.top = params.bottom + 'px';
+  /* console.log(searchInput);
+  console.log(params.bottom); */
+}
+ubicarSuggestions();

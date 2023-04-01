@@ -1,0 +1,14 @@
+#suggestions {
+  position: fixed;
+  width: auto;
+  z-index: 5;
+}
+.suggestion {
+  text-align: start;
+  background-color: aliceblue;
+}
+.suggestion-selected {
+  text-align: start;
+  color: aliceblue;
+  background-color: rgb(41, 41, 41);
+}
