@@ -20,6 +20,11 @@ function buscarFuncion() {
     }, 1000);
     return;
   }
+  if (!$suggestions.hidden) {
+    $suggestions.innerHTML = '';
+    $suggestions.hidden = true;
+  }
+
   if (!videoDetails.hidden) videoDetails.hidden = true;
   searchButton.disabled = true;
   location.hash = '##' + searchInput.value;
@@ -338,16 +343,56 @@ document.onkeydown = (e) => {
     });
     document.querySelector('#aplayer').scrollIntoView(); */
   }
+  console.log(keyPressed);
+  if (
+    (keyPressed === 'arrowdown' || keyPressed === 'arrowup') &&
+    searchInput === document.activeElement
+  ) {
+    if (keyPressed === 'arrowdown') {
+      iterarSuggestions('down');
+    } else {
+      iterarSuggestions('up');
+    }
+  }
+
+  if (
+    (keyPressed === 'enter' || keyPressed === ' ') &&
+    searchInput === document.activeElement &&
+    document.querySelector('.suggestion-selected')
+  ) {
+    e.preventDefault();
+    searchInput.value = document.querySelector(
+      '.suggestion-selected'
+    ).innerText;
+    document.querySelector('.suggestion-selected').classList.add('suggestion');
+    document
+      .querySelector('.suggestion-selected')
+      .classList.remove('suggestion-selected');
+    buscarSugs();
+
+    /* $suggestions.innerHTML = '';
+    $suggestions.hidden = true;
+    searchButton.click(); */
+    /*  if (keyPressed === 'arrowdown') {
+      iterarSuggestions('down');
+    } else {
+      iterarSuggestions('up');
+    } */
+    //alert(keyPressed);
+  }
 };
 
 var startSearch = 0;
 var lastOneSearchTime = 0;
 
-searchInput.oninput = (e) => {
-  var valor = e.target.value;
+searchInput.oninput = buscarSugs;
+
+function buscarSugs() {
+  var valor = searchInput.value;
   //console.log(valor);
   if (!valor) {
     document.querySelector('#suggestions').innerHTML = '';
+    if (!$suggestions.hidden) $suggestions.hidden = true;
     return;
   }
   /* var funcionToken =(""+Math.random()).split(".")[1]
@@ -366,20 +411,22 @@ searchInput.oninput = (e) => {
           var object = JSON.parse(res.split(/.+\(/)[1].split(')')[0]);
           var suggestionsList = object[1];
           console.log(suggestionsList);
-          if (valor == e.target.value) {
+          if (valor == searchInput.value) {
             renderSuggestions(suggestionsList);
           }
         });
     }
   }, 500);
-};
+}
 
 function renderSuggestions(list) {
   //console.log(list);
+  if ($suggestions.hidden) $suggestions.hidden = false;
   var content = '';
+  var idx = 0;
   for (arreglo of list) {
     content += `
-    <div class="suggestion">${arreglo[0]}</div>
+    <div data-idx=${idx++} class="suggestion">${arreglo[0]}</div>
     `;
   }
   //content = '<u>' + content + '</u>';
@@ -388,10 +435,65 @@ function renderSuggestions(list) {
 
 function ubicarSuggestions() {
   var params = searchInput.getBoundingClientRect();
-  console.log(params);
+
   $suggestions.style.left = params.left + 'px';
   $suggestions.style.top = params.bottom + 'px';
   /* console.log(searchInput);
   console.log(params.bottom); */
 }
 ubicarSuggestions();
+
+function iterarSuggestions(direccion) {
+  if (!document.querySelectorAll('.suggestion')) return;
+
+  if (document.querySelector('.suggestion-selected')) {
+    var idx = Number(
+      document.querySelector('.suggestion-selected').dataset.idx
+    );
+    document.querySelector('.suggestion-selected').classList.add('suggestion');
+    document
+      .querySelector('.suggestion-selected')
+      .classList.remove('suggestion-selected');
+
+    var $suggestionsColl = document.querySelectorAll('.suggestion');
+    if (direccion == 'down') {
+      //console.log(idx+1);
+      /* idx = (idx===0)? $suggestions.length-0 :  */
+      if (idx === $suggestionsColl.length - 1) {
+        $suggestionsColl[0].classList.remove('suggestion');
+        $suggestionsColl[0].classList.add('suggestion-selected');
+      } else {
+        $suggestionsColl[idx + 1].classList.remove('suggestion');
+        $suggestionsColl[idx + 1].classList.add('suggestion-selected');
+      }
+    }
+
+    if (direccion == 'up') {
+      if (idx === 0) {
+        $suggestionsColl[$suggestionsColl.length - 1].classList.remove(
+          'suggestion'
+        );
+        $suggestionsColl[$suggestionsColl.length - 1].classList.add(
+          'suggestion-selected'
+        );
+      } else {
+        $suggestionsColl[idx - 1].classList.remove('suggestion');
+        $suggestionsColl[idx - 1].classList.add('suggestion-selected');
+      }
+    }
+  } else {
+    //esto es solo para cuando no se ha seleccionado niguno
+    var $suggestionsColl = document.querySelectorAll('.suggestion');
+    if (direccion == 'up') {
+      $suggestionsColl[$suggestionsColl.length - 1].classList.remove(
+        'suggestion'
+      );
+      $suggestionsColl[$suggestionsColl.length - 1].classList.add(
+        'suggestion-selected'
+      );
+    } else {
+      $suggestionsColl[0].classList.remove('suggestion');
+      $suggestionsColl[0].classList.add('suggestion-selected');
+    }
+  }
+}
