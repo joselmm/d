@@ -334,13 +334,16 @@ document.onkeydown = (e) => {
   }
   if (keyPressed === 'a' && e.ctrlKey) {
     e.preventDefault();
-    myPlayer.list.add({
-      name: document.querySelector('#video-title').innerText,
-      videoId: document.querySelector('#video-details').dataset.videoid,
-      url: document.querySelector('[data-aq="128"]').href,
-      cover: document.querySelector('#thumb').src,
-    });
-    document.querySelector('#aplayer').scrollIntoView();
+    if(myPlayer.list.audios.filter(e=>e.cover===document.querySelector('#thumb').src).length){
+      myPlayer.list.add({
+        name: document.querySelector('#video-title').innerText,
+        videoId: document.querySelector('#video-details').dataset.videoid,
+        url: document.querySelector('[data-aq="128"]').href,
+        cover: document.querySelector('#thumb').src,
+      });
+      document.querySelector('#aplayer').scrollIntoView();
+    }
+    
   }
  /*   if (keyPressed === 'a' && e.ctrlKey) {
     e.preventDefault();
