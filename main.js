@@ -326,8 +326,23 @@ document.onkeydown = (e) => {
 
 document.onkeydown = (e) => {
   const keyPressed = e.key?.toLowerCase();
-
+ if (keyPressed === 'p' && e.ctrlKey) {
+    e.preventDefault();
+    document.querySelector('#aplayer').hidden =
+      !document.querySelector('#aplayer').hidden;
+    document.querySelector('#aplayer').scrollIntoView();
+  }
   if (keyPressed === 'a' && e.ctrlKey) {
+    e.preventDefault();
+    myPlayer.list.add({
+      name: document.querySelector('#video-title').innerText,
+      videoId: document.querySelector('#video-details').dataset.videoid,
+      url: document.querySelector('[data-aq="128"]').href,
+      cover: document.querySelector('#thumb').src,
+    });
+    document.querySelector('#aplayer').scrollIntoView();
+  }
+ /*   if (keyPressed === 'a' && e.ctrlKey) {
     e.preventDefault();
     if (!document.querySelector('#video-details').hidden)
       SCM.queue({
@@ -335,14 +350,8 @@ document.onkeydown = (e) => {
         url: document.querySelector('[data-aq="128"]').href,
       });
     else alert('espera a que cargue el video');
-    /*  myPlayer.list.add({
-      name: document.querySelector('#video-title').innerText,
-      videoId: document.querySelector('#video-details').dataset.videoid,
-      url: document.querySelector('[data-aq="128"]').href,
-      cover: document.querySelector('#thumb').src,
-    });
-    document.querySelector('#aplayer').scrollIntoView(); */
-  }
+    
+  }*/
   console.log(keyPressed);
   if (
     (keyPressed === 'arrowdown' || keyPressed === 'arrowup') &&
