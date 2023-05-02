@@ -334,7 +334,7 @@ document.onkeydown = (e) => {
   }
   if (keyPressed === 'a' && e.ctrlKey) {
     e.preventDefault();
-    if(myPlayer.list.audios.filter(e=>e.cover===document.querySelector('#thumb').src).length){
+    if(!myPlayer.list.audios.filter(e=>e.cover===document.querySelector('#thumb').src).length){
       myPlayer.list.add({
         name: document.querySelector('#video-title').innerText,
         videoId: document.querySelector('#video-details').dataset.videoid,
