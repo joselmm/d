@@ -183,7 +183,7 @@ function analizar() {
               if (videoId == sessionStorage.getItem('convirtiendo'))
                 setTimeout(() => {
                   getMetada();
-                }, 500);
+                }, 1200);
               return;
             }
             document.querySelector('#prosessing-title').hidden = true;
