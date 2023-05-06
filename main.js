@@ -3,6 +3,7 @@ document.querySelector('#search-form').onsubmit = (e) => {
   e.preventDefault();
   buscarFuncion();
 };
+let addSong = false;
 var searchInput = document.querySelector('#search-input');
 var noValue = document.querySelector('#no-value-search');
 var searchButton = document.querySelector('#search-button');
@@ -49,7 +50,7 @@ function buscarFuncion() {
         relatedVideosHTML += `
       <div class="related-videos col-lg-3 col-md-6 col-sm-12 col-xm-12">
       <a href="${location.href.replace(/#.+/, '#')}${video.id}">
-      <div>
+      <div class="related-video-cover">
       <img width="80%" src="${'https://i.ytimg.com/vi/' + video.id + '/0.jpg'}">
       <br>
       <span>${video.title}</span>
@@ -326,7 +327,7 @@ document.onkeydown = (e) => {
 
 document.onkeydown = (e) => {
   const keyPressed = e.key?.toLowerCase();
- if (keyPressed === 'p' && e.ctrlKey) {
+  if (keyPressed === 'p' && e.ctrlKey) {
     e.preventDefault();
     document.querySelector('#aplayer').hidden =
       !document.querySelector('#aplayer').hidden;
@@ -334,18 +335,34 @@ document.onkeydown = (e) => {
   }
   if (keyPressed === 'a' && e.ctrlKey) {
     e.preventDefault();
-    if(!myPlayer.list.audios.filter(e=>e.cover===document.querySelector('#thumb').src).length){
-      myPlayer.list.add({
-        name: document.querySelector('#video-title').innerText,
-        videoId: document.querySelector('#video-details').dataset.videoid,
-        url: document.querySelector('[data-aq="128"]').href,
-        cover: document.querySelector('#thumb').src,
-      });
+    if ($('#video-details')[0].hidden) {
+      lastTimeAddSongEvent = Date.now();
+      if (addSong) {
+        addSong = false;
+        $('#add-song-yn')[0].innerText = 'No se Añadira La Cancion A la Lista';
+        $('#add-song-yn')[0].hidden = false;
+      } else {
+        addSong = true;
+        $('#add-song-yn')[0].innerText = 'Se Añadira La Cancion A la Lista';
+        $('#add-song-yn')[0].hidden = false;
+      }
+      setTimeout(() => {
+        if (Date.now() - lastTimeAddSongEvent >= 1000) {
+          $('#add-song-yn')[0].hidden = true;
+        }
+      }, 1000);
+    }
+
+    if (
+      !myPlayer.list.audios.filter(
+        (e) => e.cover === document.querySelector('#thumb').src
+      ).length
+    ) {
+      addSongToPlayList();
       document.querySelector('#aplayer').scrollIntoView();
     }
-    
   }
- /*   if (keyPressed === 'a' && e.ctrlKey) {
+  /*   if (keyPressed === 'a' && e.ctrlKey) {
     e.preventDefault();
     if (!document.querySelector('#video-details').hidden)
       SCM.queue({
@@ -515,4 +532,13 @@ function iterarSuggestions(direccion) {
       $suggestionsColl[0].classList.add('suggestion-selected');
     }
   }
+}
+
+function addSongToPlayList() {
+  myPlayer.list.add({
+    name: document.querySelector('#video-title').innerText,
+    videoId: document.querySelector('#video-details').dataset.videoid,
+    url: document.querySelector('[data-aq="128"]').href,
+    cover: document.querySelector('#thumb').src,
+  });
 }

@@ -20,7 +20,6 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    
     <div hidden id="aplayer"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
@@ -28,11 +27,11 @@
       const myPlayer = new APlayer({
         container: document.getElementById('aplayer'),
         audio: [],
-        order:"list",
-        remove:true
+        order: 'list',
+        remove: true,
       });
     </script>
- 
+
     <div align="center">
       <div id="suggestions" hidden></div>
       <div
@@ -45,7 +44,14 @@
         class="input-group"
       >
         <form style="width: 80%; display: inline; margin: 0" id="search-form">
-          <input id="search-input" type="search" class="form-control" placeholder="busca" style="width: 75%; display: inline-block" autocomplete="off">
+          <input
+            id="search-input"
+            type="search"
+            class="form-control"
+            placeholder="busca"
+            style="width: 75%; display: inline-block"
+            autocomplete="off"
+          />
           <button
             style="width: 20%; display: inline-block"
             id="search-button"
@@ -58,6 +64,9 @@
           <br />
           <span id="no-value-search" hidden style="color: red"
             >Ingresa un valor valido</span
+          >
+          <span id="add-song-yn" hidden style="color: red"
+            >Ya no se añadira el audio a la lista</span
           >
         </form>
       </div>

@@ -12,3 +12,6 @@
   color: aliceblue;
   background-color: rgb(41, 41, 41);
 }
+.related-video-cover:hover {
+  background-color: rgb(122, 122, 122);
+}
