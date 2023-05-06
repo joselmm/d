@@ -356,8 +356,10 @@ document.onkeydown = (e) => {
     if (
       !myPlayer.list.audios.filter(
         (e) => e.cover === document.querySelector('#thumb').src
-      ).length
+      ).length &&
+      !$('#video-details')[0].hidden
     ) {
+      //  alert('hello ther');
       addSongToPlayList();
       document.querySelector('#aplayer').scrollIntoView();
     }
