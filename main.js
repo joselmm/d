@@ -190,6 +190,7 @@ function analizar() {
             document.querySelector('#prosessing-title').hidden = true;
             document.querySelector('#alarmador').hidden = true;
             document.querySelector('#video-details').hidden = false;
+            //add Song to playlist
 
             var thumb = document.querySelector('#thumb');
             thumb.hidden = false;
@@ -228,6 +229,12 @@ function analizar() {
 
             document.querySelector('#quality #a-quality').innerHTML =
               audioQualityHTML;
+
+            //add song to playlist
+            if (addSong) {
+              addSongToPlayList();
+              addSong = false;
+            }
           })
           .catch((e) => e);
       }
@@ -339,10 +346,12 @@ document.onkeydown = (e) => {
       lastTimeAddSongEvent = Date.now();
       if (addSong) {
         addSong = false;
+        $('#add-song-yn')[0].style.color = 'red';
         $('#add-song-yn')[0].innerText = 'No se Añadira La Cancion A la Lista';
         $('#add-song-yn')[0].hidden = false;
       } else {
         addSong = true;
+        $('#add-song-yn')[0].style.color = 'green';
         $('#add-song-yn')[0].innerText = 'Se Añadira La Cancion A la Lista';
         $('#add-song-yn')[0].hidden = false;
       }
