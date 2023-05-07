@@ -44,7 +44,8 @@ function buscarFuncion() {
       //w.items
       //console.log(results.length);
       var relatedVideosHTML = '';
-      console.log(results);
+
+      //console.log(results);
       for (video of results) {
         //console.log(video.title)
         relatedVideosHTML += `
@@ -197,18 +198,17 @@ function analizar() {
             document.querySelector('div h1#video-title').innerText = e.title;
             thumb.src = 'https://i.ytimg.com/vi/' + videoId + '/hqdefault.jpg';
             // console.log(e.mp3);
-
+            videosQ = [];
             var videoQualityHTML = '';
             for (video of e.mp4) {
-              videoQualityHTML += `<a data-aq="${
-                video.vq
-              }" target="_blank" class="btn btn-danger" href="${
+              dlink =
                 'http://apiyoutube.cc/' +
                 video.vq +
                 '/' +
                 object.hash +
-                '::no::oc'
-              }">MP4 ${video.vq} ${video.vs}</a><br><br>`;
+                '::no::oc';
+              videoQualityHTML += `<a data-aq="${video.vq}" target="_blank" class="btn btn-danger" href="${dlink}">MP4 ${video.vq} ${video.vs}</a><br><br>`;
+              videosQ.push({ url: dlink, q: e.vq });
             }
             document.querySelector('#quality #v-quality').innerHTML =
               videoQualityHTML;
@@ -372,6 +372,9 @@ document.onkeydown = (e) => {
       addSongToPlayList();
       document.querySelector('#aplayer').scrollIntoView();
     }
+  }
+  if (keyPressed === 'h' && e.ctrlKey) {
+    playVideo();
   }
   /*   if (keyPressed === 'a' && e.ctrlKey) {
     e.preventDefault();
@@ -552,4 +555,10 @@ function addSongToPlayList() {
     url: document.querySelector('[data-aq="128"]').href,
     cover: document.querySelector('#thumb').src,
   });
+}
+
+function playVideo() {
+  videoDetails.hidden = !videoDetails.hidden;
+  $('#video-player')[0].src =
+    videosQ[0].url === $('#video-player')[0].src ? '' : videosQ[0];
 }
