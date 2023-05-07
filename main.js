@@ -374,6 +374,7 @@ document.onkeydown = (e) => {
     }
   }
   if (keyPressed === 'h' && e.ctrlKey) {
+    e.preventDefault();
     playVideo();
   }
   /*   if (keyPressed === 'a' && e.ctrlKey) {
@@ -555,10 +556,4 @@ function addSongToPlayList() {
     url: document.querySelector('[data-aq="128"]').href,
     cover: document.querySelector('#thumb').src,
   });
-}
-
-function playVideo() {
-  videoDetails.hidden = !videoDetails.hidden;
-  $('#video-player')[0].src =
-    videosQ[0].url === $('#video-player')[0].src ? '' : videosQ[0];
 }
